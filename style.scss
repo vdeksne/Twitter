@@ -1,0 +1,244 @@
+$base_color: #17202A;
+$color1: #fff;
+$color1_transparent: #5d636a;
+$accent_color: #4BA0EC;
+
+@function pxToEm($to, $from: 16) {
+    @return $to/$from + 0em
+}
+
+$mode: dark;
+@if $mode == lite {
+    $base_color: #ffffff;
+    $color1_transparent: #c9e2f9;
+    $color1: #17202A;
+    $accent_color: #4BA0EC;
+}
+
+body {
+    margin: 0;
+    background-color: $base_color;
+}
+
+.sidebar svg {
+    fill: $color1;
+}
+
+nav a {
+    color: $color1;
+}
+
+.btn {
+    text-decoration: none;
+    color: $color1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $accent_color;
+    border-radius: 100px;
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 700;
+    font-size: pxToEm(15);
+    line-height: pxToEm(18);
+
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+.wraper {
+    display: flex;
+    gap: 31px;
+    width: 1230px;
+    padding: 0 15px;
+    margin: auto;
+}
+
+.content {
+    width: 598px; 
+    &__cover_bg {
+    background: #2F2F2F center;
+    background-size: cover; 
+    height: 198px; 
+    }
+}
+
+.section_right {
+    width: 346px;
+    padding-top: 7px;
+}
+
+.search_input form {
+    width: 100%;
+}
+
+.search_input {
+    position: relative;
+input {
+    width: 346px;
+    height: 40px;
+    left: 990px;
+    top: 7px;
+    background: #283340;
+    border-radius: 100px;
+    border: 0;
+    padding: 0 12px 0 49px; 
+    box-sizing: border-box;
+    font-family: 'Helvetica Neue';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 15px;
+    line-height: 18px; 
+    color: #eff2f4; 
+    &::placeholder{
+        color: #8A98A4;
+    }
+
+    &:focus {
+        outline: none;
+        + .search_input__icon {
+            stroke: #eff2f4;
+        }
+    }
+}
+
+&__icon {
+position: absolute;
+stroke: #8A98A4;
+left: 17px;
+top: 12px;
+}
+
+}
+
+@mixin navigation_link_with_icon () {
+    text-decoration: none;
+    padding: pxToEm(15) pxToEm(10);
+}
+
+@mixin closeState () {
+    width: pxToEm(52);
+    .sidebar__navigation a svg {
+        margin: 0;
+    }
+    .sidebar__navigation span {
+        display: none;
+    }
+    .sidebar__toggle {
+        transform: rotate(180deg);
+        transition: transform 2s;
+        margin-left: 8px;
+    }
+    .sidebar__btn {
+        width: 52px;
+        height: 52px;
+    }
+}
+
+@mixin openeState () {
+    width: pxToEm(212);
+
+    .sidebar {
+
+        &__navigation a svg {
+            margin-right: pxToEm(21);
+        }
+        &__navigation span {
+            display: initial;
+        }
+        &__toggle {
+            transform: rotate(0);
+            transition: transform 2s;
+            margin-left: auto;
+        }
+        &__btn {
+            width: 100%;
+            height: pxToEm(50);
+        }
+    }
+}
+
+.sidebar {
+    @include openeState();
+    &--close {
+        @include closeState();
+    }
+    &__logo {
+    @include navigation_link_with_icon();
+    display: inline-block;
+    }
+    &__icon {
+        display: flex;
+        position: relative;
+    }
+
+    &__notification {
+        border-radius: 50%;
+        border: 1px solid $base_color;
+        background: $accent_color;
+        width: pxToEm(17, 11);
+        height: pxToEm(17, 11);
+        position: absolute;
+        top: pxToEm(-8, 11);
+        left: pxToEm(11, 11);
+        font-size: pxToEm(11, 20);
+        font-weight: 400;
+        line-height: pxToEm(17, 11);
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    &__navigation {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: pxToEm(22);
+    
+        a {
+            @include navigation_link_with_icon();
+            display: flex;
+            align-items: center;
+            margin-top: pxToEm(6);
+
+            font-family: 'Helvetica Neue';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 1.25em;
+            line-height: pxToEm(24, 20);
+
+            &:hover {
+                background: rgb($color1, 0.3);
+
+                .sidebar__notification {
+                    border-color: $color1_transparent;
+                }
+            }
+        }
+    }
+    &__toggle {
+        margin-top: pxToEm(20);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: pxToEm(30);
+        height: pxToEm(30);
+        border: pxToEm(2) solid $color1;
+        border-radius: 50%;
+    }
+}
+
+@media screen and (max-width:800px){
+    .sidebar {
+        @include closeState();
+        &--close {
+            @include openeState();
+        }
+}
+}
+
+@media screen and (max-width:600px) {
+    .sidebar {
+        font-size: 14px;
+    }
+
+}
